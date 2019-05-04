@@ -1,4 +1,4 @@
-extern crate wasm_bindgen;
+use zydis;
 
 use wasm_bindgen::prelude::*;
 
@@ -9,7 +9,7 @@ extern {
 
 #[wasm_bindgen]
 pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
+    alert(&format!("push: {}", zydis::enums::Mnemonic::PUSH.get_string().unwrap()));
 }
 
 #[wasm_bindgen]

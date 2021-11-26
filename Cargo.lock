@@ -142,6 +142,7 @@ checksum = "0237232789cf037d5480773fe568aac745bfe2afbc11a863e97901780a6b47cc"
 [[package]]
 name = "zydis"
 version = "3.1.1"
+source = "git+https://github.com/williballenthin/zydis-rs?branch=nightly/wasm#ab3159583a148b92121d8a1970d15ee3e80e8072"
 dependencies = [
  "bitflags",
  "cmake",

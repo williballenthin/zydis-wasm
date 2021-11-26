@@ -2,11 +2,16 @@
 name = "zydis-wasm"
 version = "0.1.0"
 authors = ["Willi Ballenthin <wilbal1087@gmail.com>"]
-edition = "2018"
+edition = "2021"
+homepage = "https://github.com/williballenthin/zydis-wasm"
+repository = "https://github.com/williballenthin/zydis-wasm"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
+# zydis with the following tweaks:
+# https://github.com/williballenthin/zydis-rs/tree/feature/wasm
+# https://github.com/williballenthin/zycore-c/tree/feature/wasm
+zydis = { path = "../zydis-rs", features = ["wasm"] }
 wasm-bindgen = "0.2"
-zydis = { git = "https://github.com/zyantific/zydis-rs", branch="webassembly", features=["wasm"]}

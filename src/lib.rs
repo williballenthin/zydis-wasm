@@ -1,18 +1,23 @@
-use zydis;
-
+use std::io::Write;
+ 
 use wasm_bindgen::prelude::*;
+use zydis::*;
 
 #[wasm_bindgen]
-extern {
-    pub fn alert(s: &str);
-}
+pub fn disassemble(buf: Vec<u8>) -> String {
+    let formatter = Formatter::new(FormatterStyle::INTEL).unwrap();
+    let decoder = Decoder::new(MachineMode::LONG_64, AddressWidth::_64).unwrap();
 
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(&format!("push: {}", zydis::enums::Mnemonic::PUSH.get_string().unwrap()));
-}
+    let mut buffer = [0u8; 200];
+    let mut buffer = OutputBuffer::new(&mut buffer[..]);
 
-#[wasm_bindgen]
-pub fn greet2(name: &str) {
-    alert(&format!("Goodbye, {}!", name));
+    let mut w = Vec::new();
+
+    let addr = 0x007FFFFFFF400000;
+    for (instruction, ip) in decoder.instruction_iterator(&buf, addr) {
+        formatter.format_instruction(&instruction, &mut buffer, Some(ip), None).unwrap();
+        writeln!(&mut w, "0x{:016X} {}", ip, buffer).unwrap();
+    }
+
+    return String::from_utf8(w).unwrap();
 }
